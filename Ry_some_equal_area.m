@@ -1,0 +1,48 @@
+function [drealGDP1,dGini_GDP1,dWel1,dTheil_Wel1] = Ry_some_equal_area(unique_prov,psi_sell_value,numbers_chu,numbers_ru,prov_code,TS_2017,Ry_2017,Rh_2017,r_o,r_2017,m_od_17,Ry,Rh,tar_ry_2017,tar_rh_2017,A_2017,V_2017,c_od_2017,L_2017,H_2017,Lh_2017,Ph_2017,A_tar_2017,N_2017,F,Pry1,N,alpha,eta,kappa,sigma,rho,Pl_2017,Pry,Prh)
+% 调出方
+
+for i = numbers_chu
+    idx = prov_code == unique_prov(i); 
+    tar_ry_2017_values = tar_ry_2017(idx); 
+    idx_o = find(tar_ry_2017_values(:,1) < 0);
+    psi_sell= psi_sell_value;
+    TS_2017_values = TS_2017(idx);
+    TS_total_2017(i) = sum(psi_sell.*TS_2017_values(abs(idx_o),:));
+    Ry_values = Ry(idx); 
+    Ry_2017_values = Ry_2017(idx);
+    F_values = F(idx);
+    Ry_values(abs(idx_o),:) = Ry_2017_values(abs(idx_o),:)-psi_sell.*TS_2017_values(abs(idx_o),:);
+    F_values(abs(idx_o),:) = r_o.*psi_sell.*TS_2017_values(abs(idx_o),:);
+    Ry(idx) = Ry_values; 
+    F(idx) = F_values;
+end
+TS_total_2017_China = sum(TS_total_2017);
+% 调入方
+
+for i = numbers_ru
+    idx = prov_code == unique_prov(i); 
+    tar_ry_2017_values = tar_ry_2017(idx); 
+    idx_d = find(tar_ry_2017_values(:,1) > 0);
+    s(i) = length(idx_d);
+end
+S = sum(s);
+psi_buy=1/S;
+for i = numbers_ru
+    idx = prov_code == unique_prov(i);
+    tar_ry_2017_values = tar_ry_2017(idx); 
+    idx_d = find(tar_ry_2017_values(:,1) > 0);   
+    Ry_values = Ry(idx); 
+    Ry_2017_values = Ry_2017(idx);
+    F_values = F(idx);
+    r_2017_values = r_2017(idx);
+    Ry_values(abs(idx_d),:) = Ry_2017_values(abs(idx_d),:) + psi_buy.*TS_total_2017_China;
+    F_values(abs(idx_d),:) = (-1).*r_2017_values(abs(idx_d),:).*psi_buy.*TS_total_2017_China;
+    Ry(idx) = Ry_values; 
+    F(idx) = F_values;
+end
+SolveDelta_2017
+drealGDP1 = drealGDP;
+dGini_GDP1 = dGini_GDP ;
+dWel1 = dWel;
+dTheil_Wel1 = dTheil_Wel;
+end
