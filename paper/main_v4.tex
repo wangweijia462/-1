@@ -1161,10 +1161,10 @@ GDP下降在第7—8期才达到峰值约$-0.57\%$，
 并配套核心城市居住性用地供给扩张和户籍制度改革，
 实现土地、劳动力和财政三类制度摩擦的协同化解。
 
-从更宏观的战略视角看，上述政策建议与"十五五"规划的前期部署高度契合。
+从更宏观的战略视角看，上述政策建议与「十五五」规划的前期部署高度契合。
 建设用地指标的跨区域市场化流转与土地财政的软着陆，
 不仅是化解当前阶段地方债务风险、平滑房地产下行冲击的近期工具，
-更是"十五五"时期畅通国内大循环、
+更是「十五五」时期畅通国内大循环、
 引导要素向\textbf{新质生产力}集聚区自由流动的关键制度保障。
 资本、劳动力和土地要素能够更高效地向高生产率城市汇集，
 不仅能缓解土地财政对城市TFP的拖累，
@@ -1409,7 +1409,7 @@ $\rho s^G_{Rh,i}d\varepsilon^q + \rho s^G_{Rh,i}\Phi_i d\varepsilon^q + \cdots$
 模型均衡求解采用嵌套不动点迭代：
 \begin{enumerate}[leftmargin=2em]
 \item \textbf{外层循环}：给定土地分配$(\Ry,\Rh)$和政府转移$F$，
-  调用\texttt{fsolve}求解方程组（\ref{eq:equilibrium}），
+  调用Python的\texttt{scipy.optimize.fsolve}求解方程组（\ref{eq:equilibrium}），
   得到$(d\bm{w},d\bm{L},d\bm{L}^h)$。
 \item \textbf{内层更新}：计算新均衡的$G_{\rm new}$、$A_{\rm new}$、$q_{\rm new}$，
   验证市场出清条件（\ref{eq:land_clearing}）。
