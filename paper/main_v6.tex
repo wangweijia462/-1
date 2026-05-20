@@ -1,0 +1,1351 @@
+%% ================================================================
+%% 土地财政收缩、建设用地错配与长期增长
+%% ——房地产下行周期的量化空间一般均衡分析
+%% 《经济研究》投稿版
+%% 编译说明：Overleaf / XeLaTeX
+%% ================================================================
+
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+%%—— 宏包 ——%%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc, decorations.pathreplacing}
+\usepackage{float}
+\usepackage{footnote}
+\usepackage{indentfirst}
+
+\geometry{top=2.5cm,bottom=2.5cm,left=3.2cm,right=3.2cm}
+\onehalfspacing
+\setlength{\parindent}{2em}
+
+%%—— 定理环境 ——%%
+\theoremstyle{plain}
+\newtheorem{proposition}{命题}
+\newtheorem{lemma}{引理}
+\newtheorem{corollary}{推论}
+\theoremstyle{definition}
+\newtheorem{assumption}{假设}
+\newtheorem{definition}{定义}
+\theoremstyle{remark}
+\newtheorem{remark}{注释}
+
+%%—— 自定义命令 ——%%
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Ry}{R^{y}}
+\newcommand{\Rh}{R^{h}}
+\newcommand{\tauy}{\tau^{y}}
+\newcommand{\tauh}{\tau^{h}}
+
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=black}
+
+%%—— 颜色定义 ——%%
+\definecolor{chinaRed}{RGB}{196,30,58}
+\definecolor{darkBlue}{RGB}{30,70,140}
+\definecolor{lightGray}{RGB}{230,230,230}
+
+%% ================================================================
+\begin{document}
+%% ================================================================
+
+%%—— 标题页 ——%%
+\title{
+  \vspace{-1cm}
+  {\zihao{3}\bfseries
+  土地财政收缩、建设用地错配与长期增长}\\[6pt]
+  {\zihao{-3}
+  ——房地产下行周期的量化空间一般均衡分析}
+  \thanks{感谢匿名审稿专家的宝贵意见，文责自负。}
+}
+
+\author{
+  {\zihao{-4}王维佳\thanks{王维佳，西安交通大学应用经济学院应用经济学博士生，电子邮箱：18522704823@163.com。}}
+}
+
+\date{\zihao{-4} 2026年}
+\maketitle
+\thispagestyle{empty}
+
+%%—— 中文摘要 ——%%
+\begin{abstract}
+\noindent
+房地产市场下行使土地财政、地方债务和空间资源配置之间的深层矛盾集中显现。
+本文构建包含土地财政内生机制、两类建设用地和DSGE动态模块的量化空间一般均衡模型，
+基于Fréchet分布的劳动力异质性迁移框架和使用年限标准化的土地价格处理，
+利用285个地级市2017年截面数据校准参数，
+通过八类反事实实验评估房地产下行与土地制度改革的长期效应。
+研究发现，房价下降10\%使实际GDP下降0.61\%，城市间福利泰尔指数上升2.16\%；
+土地出让收入下降30\%带来1.24\%的GDP损失，土地财政—TFP渠道贡献约60\%。
+将建设用地指标交易分层分析表明，跨省交易的效率与公平收益均优于省内交易；
+在效率—公平权重为6:4时，最优土地配置方案可将GDP增益提至0.41\%，
+同时使泰尔指数降幅扩大至1.15\%。
+上述结论表明，房地产下行的核心并非单一需求收缩，
+而是土地财政约束下的空间资源再配置问题。
+
+\medskip
+\noindent\textbf{关键词：}
+房地产下行周期；土地财政；建设用地错配；
+量化空间一般均衡；城市收缩
+
+\medskip
+\noindent\textbf{JEL分类号：}
+R11；R14；H74；O47；J61
+\end{abstract}
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%% ================================================================
+%% 一、引言
+%% ================================================================
+\setcounter{secnumdepth}{0}
+\section{一、引言}
+
+在中国经济由高速增长转向高质量发展的过程中，
+房地产市场、土地制度与地方财政之间的关系正在发生深刻变化。
+党的二十大报告强调坚持房子是用来住的、不是用来炒的定位，
+中央经济工作会议也将统筹化解房地产、地方债务和中小金融机构风险
+置于更加突出的位置。
+与政策目标相对应的现实矛盾是，
+自2021年下半年以来，
+商品房销售面积和土地出让收入同步下行，
+地方政府过去依赖土地出让收入支撑基础设施和公共服务的增长模式面临约束。
+房地产下行由此不只是行业景气度变化，
+而是牵动土地要素配置、地方财政可持续和区域协调发展的制度性问题。
+
+这一制度性问题首先表现为空间错配。
+人口和产业持续向核心城市、都市圈和若干区域中心集聚，
+但建设用地指标仍受到行政配额和属地边界的约束，
+人口净流入地区常常面临居住性用地和生产性用地不足，
+人口净流出地区却沉淀大量低效建设用地。
+房地产上行期，土地财政能够暂时掩盖这种错配；
+房地产下行期，土地出让收入收缩会压缩公共投入，
+进而降低城市全要素生产率、削弱人口吸引力并进一步压低土地需求，
+形成本文所称的土地财政—空间错配螺旋。
+
+既有文献为理解这一问题提供了重要基础。
+关于土地财政与增长，研究分别强调土地出让收入对基础设施融资的支持作用、
+土地财政依赖对用地结构和制造业生产率的扭曲，
+以及财政压力对土地出让行为的内生影响
+\citep{chen2016,liu2021,zhao2015,fan2019,liu2018}。
+关于地方债务和财政分权，相关研究指出，
+地方竞争既可能促进增长，
+也可能在支出结构、债务积累和资源配置上产生外部性
+\citep{bai2016,luo2022,fuyong2007,qiantingyi1994,tiebout1956,oates1972,musgrave1959}。
+关于空间经济和要素错配，
+Hsieh-Klenow框架、量化空间经济学和城市均衡模型
+为测算土地、劳动力和住房约束的福利后果提供了方法论基础
+\citep{hsiehklenow2009,eaton2002,ahlfeldt2015,redding2017,fajgelbaum2019,
+henderson1974,rosen1979,roback1982,hsiehmoretti2019,diamond2016}，
+中国语境下的户籍、土地配额、高铁和建设用地指标交易研究
+也揭示了制度摩擦对空间配置的影响
+\citep{wang2020,lu2019,yan2021,kline2014,chen2020,lu2020}。
+关于房地产与宏观波动，
+住房供给弹性、库存动态、房价冲击和抵押约束
+已被纳入动态一般均衡分析
+\citep{glaeser2005,gyourko2013,favilukis2017,chen2017,huang2018,
+kiyotakimoore1997,iacoviello2005,liuetal2013,chen2016b}。
+
+与上述研究相比，本文关注的不是单一的土地错配、房价波动或地方债务问题，
+而是三者在房地产下行周期中的联动机制。
+本文构建一个带有DSGE扩展的量化空间一般均衡模型，
+将生产性建设用地和居住性建设用地区分开来，
+将地方政府土地出让收入、公共投入、债务动态和城市TFP内生连接，
+并在285个地级市截面数据上进行参数校准。
+在此基础上，本文设计八类政策情景，比较其对GDP、福利和城市间差距的影响。
+
+与上述研究相比，本文有三方面边际贡献。其一，研究视角上，本文将房地产下行理解为土地财政约束下的空间资源再配置过程，强调冲击通过公共投入—TFP渠道转化为供给侧的持久损失，而非单纯的需求侧收缩。其二，模型设定上，本文引入Fréchet分布刻画劳动力异质性，对生产性用地价格进行使用年限标准化修正，并区分省内与跨省两个层次的建设用地指标交易，从而在一个统一框架内比较不同政策路径的效率—公平权衡。其三，数量评估上，本文构造涵盖效率与公平权重的帕累托最优规划问题，为指标分配的具体城市方案提供量化支撑，弥补了现有研究缺乏多目标最优设计的不足。
+
+%% ================================================================
+%% 二、理论机制与模型构建
+%% ================================================================
+\section{二、理论机制与模型构建}
+
+房地产下行影响长期增长的关键，在于房价变化会通过土地财政改变地方政府的公共投入能力。
+若地方公共投入能够提高企业生产率，则土地收入下降不仅减少当期财政资源，
+还会削弱城市未来的工资、人口和土地需求。
+增长型城市因人口和产业持续流入，能够较快吸收房价调整；
+收缩型城市则可能同时遭遇房价下跌、土地收入收缩、公共服务弱化和人口外流，
+冲击在空间上被放大。图\ref{fig:mechanism}概括了这一机制。
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  node distance=1.2cm and 1.8cm,
+  box/.style={rectangle, rounded corners, draw=darkBlue, fill=darkBlue!10,
+              text width=3.2cm, align=center, font=\zihao{-5}, minimum height=1cm},
+  redbox/.style={rectangle, rounded corners, draw=chinaRed, fill=chinaRed!10,
+                 text width=3.2cm, align=center, font=\zihao{-5}, minimum height=1cm},
+  arrow/.style={-Stealth, thick, darkBlue},
+  redarrow/.style={-Stealth, thick, chinaRed},
+]
+\node[redbox] (shock) {房价冲击\\$\varepsilon^q < 0$};
+\node[box, below left=1.2cm and 2.5cm of shock] (land_rev) {土地出让收入\\$\Pi^G_i \downarrow$};
+\node[box, below right=1.2cm and 2.5cm of shock] (IS) {住宅库存\\$IS_i \uparrow$};
+\node[box, below=1.3cm of land_rev] (G) {公共投入\\$G_i \downarrow$};
+\node[box, below=1.3cm of IS] (dev) {开发商投资\\$S_i \downarrow$};
+\node[box, below=1.3cm of G] (A) {全要素生产率\\$A_i \downarrow$};
+\node[box, below=1.3cm of A] (w) {实际工资\\$w_i \downarrow$};
+\node[box, right=1.5cm of w] (V) {居民福利\\$V_i = w_i/q_i^{\eta}$};
+\node[redbox, below=1.2cm of w] (mig) {劳动力外流\\$L_i \downarrow$};
+\node[redbox, left=2cm of G] (debt) {地方债务\\$D_i \uparrow$};
+\draw[redarrow] (shock) -- (land_rev);
+\draw[redarrow] (shock) -- (IS);
+\draw[arrow] (land_rev) -- (G);
+\draw[arrow] (IS) -- (dev);
+\draw[arrow] (G) -- (A);
+\draw[arrow] (A) -- (w);
+\draw[arrow] (w) -- (mig);
+\draw[arrow] (w) -- (V);
+\draw[arrow] (G) -- (debt);
+\draw[redarrow,dashed,bend right=40] (mig) to node[left,font=\zihao{-6}]{螺旋反馈} (land_rev);
+\draw[redarrow,dashed,bend left=30] (debt) to (G);
+\node[font=\zihao{-6},gray,below=0.3cm of mig] {土地财政—空间错配螺旋};
+\end{tikzpicture}
+}
+\caption{模型传导机制示意图：土地财政—空间错配螺旋。
+  实线箭头为直接效应，虚线箭头为反馈环。}
+\label{fig:mechanism}
+\end{figure}
+
+\subsection{模型设定}
+
+考虑一个由$N$个地级市构成的封闭经济体。
+每个城市存在家庭、企业、房地产开发商和地方政府。
+家庭消费可贸易品$c_i$和住房服务$h_i$，其静态效用为
+\begin{equation}
+  U_i=c_i^{1-\eta}h_i^\eta, \quad \eta\in(0,1),
+  \label{eq:utility}
+\end{equation}
+在预算约束$c_i+q_i h_i\leq w_i$下，住房需求为$h_i=\eta w_i/q_i$，间接效用可写为
+\begin{equation}
+  V_i=\frac{w_i}{q_i^\eta}.
+  \label{eq:welfare}
+\end{equation}
+
+劳动力跨城市流动的微观基础来自个体偏好异质性，本文通过Fréchet分布加以刻画。
+设出生于城市$o$的劳动者$k$在目的地$d$的随机效用为
+\begin{equation}
+  u_{od}^k = \frac{V_d \cdot \epsilon_{od}^k}{c_{od}},
+  \label{eq:random_utility}
+\end{equation}
+其中$V_d$为城市$d$的间接效用（方程\ref{eq:welfare}），
+$c_{od}>0$为双边迁移成本，
+$\epsilon_{od}^k\geq 0$为刻画个体特质（偏好、社会网络等）的随机扰动项，
+满足Fréchet分布$\Pr(\epsilon_{od}^k\leq z)=\exp(-z^{-\kappa})$，
+$\kappa>0$为集中度（迁移弹性）参数。
+将$\epsilon_{od}^k$置于分子符合Eaton-Kortum框架的标准设定：
+特质冲击越大，该目的地对个体$k$的吸引力越强；
+$V_d/c_{od}$则代表目的地$d$的"位置优势"（location advantage）。
+利用Fréchet分布的极值性质，
+个体$k$选择使效用最大的城市$d$的概率为
+\begin{equation}
+  m_{od}=\Pr\!\left[\frac{V_d\,\epsilon_{od}^k}{c_{od}}
+    =\max_{d'}\frac{V_{d'}\,\epsilon_{od'}^k}{c_{od'}}\right]
+  =\frac{(V_d/c_{od})^\kappa}{\sum_{d'=1}^N(V_{d'}/c_{od'})^\kappa}.
+  \label{eq:migration}
+\end{equation}
+$\kappa$越大，劳动力对城市间效用差异越敏感，迁移越向高效用城市集中；
+$\kappa\to\infty$退化为确定性选择，$\kappa\to 0$则对应完全随机流动。
+城市$d$的就业人口由$L_d=\sum_o m_{od}\bar{N}_o$决定。
+此外，Fréchet设定还允许对总体福利变化进行结构性分解：
+福利变化可分解为城市吸引力变化项和迁移成本变化项，
+这将在反事实分析中提供更丰富的渠道识别。
+
+企业使用劳动力$L_i$和生产性建设用地$\Ry_i$生产可贸易品，生产函数为
+\begin{equation}
+  Y_i=A_i L_i^\alpha(\Ry_i)^{1-\alpha},\quad \alpha\in(0,1).
+  \label{eq:production}
+\end{equation}
+一阶条件给出工资和生产性用地边际产出。
+由于建设用地指标存在行政配额约束，
+实际土地价格可能偏离市场出清价格。
+本文定义生产性用地扭曲楔和居住性用地扭曲楔分别为
+\begin{align}
+  \tauy_i &\equiv \frac{1-\alpha}{\alpha}\frac{w_iL_i}{p_i^{y,adj}\Ry_i}-1,
+  \label{eq:wedge_ry}\\
+  \tauh_i &\equiv \frac{1-\sigma}{\sigma}\frac{w_iL_i^h}{p_i^h\Rh_i}-1,
+  \label{eq:wedge_rh}
+\end{align}
+其中$p_i^{y,adj}$为经使用年限标准化修正后的生产性用地价格
+（见第三节详细说明），
+$\tauy_i>0$表示生产性用地不足，$\tauy_i<0$表示生产性用地过剩；
+$\tauh_i$刻画居住性用地相对于住房需求的紧缺程度。
+
+这些扭曲系数并非外生强加，而是内生于制度摩擦和行政配额刚性。
+对于生产性用地：工业用地指标在城市之间按行政计划分配，
+与人口和产业的实际集聚格局脱节，
+导致人口净流入地区指标不足、净流出地区指标过剩，
+形成$\tauy_i>0$（净流入）和$\tauy_i<0$（净流出）的空间格局。
+对于居住性用地：户籍制度限制非本地户籍人口的公共服务享有权，
+间接压低核心城市居住用地供给需求，
+使实际住宅供给低于自由流动均衡值，
+形成普遍的$\tauh_i>0$。
+因此，扭曲系数在现实中对应可识别的制度摩擦，
+而非统计残差——这一点对于反事实政策模拟的可解释性至关重要。
+
+\begin{assumption}[财政—TFP关联]
+  \label{ass:tfp}
+  城市$i$的全要素生产率由外生基础生产率$\bar{A}_i$和地方公共投入$G_i$共同决定：
+  \begin{equation}
+    A_i=\bar{A}_i^{1-\rho}G_i^\rho,\quad \rho\in(0,1).
+    \label{eq:tfp}
+  \end{equation}
+\end{assumption}
+这一设定刻画地方政府通过基础设施、公共服务和营商环境影响企业生产率的渠道。
+房地产部门使用建筑劳动和居住性用地生产住房，
+满足$H_i=(L_i^h)^\sigma(\Rh_i)^{1-\sigma}$，
+住房价格由开发成本和居住性用地扭曲共同决定。
+
+\subsection{动态模块与均衡条件}
+
+为刻画房地产下行后的跨期调整，本文在静态空间均衡外加入DSGE动态模块。
+住宅库存满足
+\begin{equation}
+  IS_{i,t}=(1-\delta_{IS})IS_{i,t-1}+S_{i,t}-D^h_{i,t},
+  \label{eq:inventory}
+\end{equation}
+其中$S_{i,t}$为新增供给，$D^h_{i,t}=\eta w_{i,t}L_{i,t}/q_{i,t}$为住房需求。
+住房价格按库存压力和聚合房价冲击调整：
+\begin{equation}
+  \ln q_{i,t}=\rho_q\ln q_{i,t-1}+(1-\rho_q)\ln\bar{q}_i
+  -\gamma\frac{IS_{i,t}}{H_{i,t}}+\varepsilon_t^q.
+  \label{eq:price_dyn}
+\end{equation}
+开发商新增供给服从预期调整规则：
+\begin{equation}
+  \widehat{S}_{i,t}=\varphi_q\E_t\widehat{q}_{i,t+1}-\varphi_{IS}\widehat{IS}_{i,t},
+  \label{eq:developer_rule}
+\end{equation}
+该规则表明预期房价下降和库存上升会共同压缩新开工。
+
+地方政府财政收入包括居住性用地出让收入、生产性用地出让收入和一般税收
+（含潜在的房地产持有税）：
+\begin{equation}
+  \text{Rev}_i=\theta q_i\Rh_i+\theta^y p_i^{y,adj}\Ry_i+T_i^{\rm prop}+T_i^{\rm other}.
+  \label{eq:revenue}
+\end{equation}
+其中$T_i^{\rm other}$为非土地一般税收，$T_i^{\rm prop}$为房地产持有税。
+在基准均衡中$T_i^{\rm prop}=0$（当前中国大陆尚未全面开征）；
+在实验5（房地产税改革）中，引入持有税率$\tau_{prop}$，
+对居民住房存量征税：
+\begin{equation}
+  T_i^{\rm prop}=\tau_{prop}\cdot q_i\cdot H_i,
+  \label{eq:prop_tax}
+\end{equation}
+其中$H_i$为城市$i$的住房存量（慢变量）。
+相应地，家庭持有住房的有效用户成本从$q_i$上升至$(1+\tau_{prop})q_i$，
+预算约束调整为$c_i+(1+\tau_{prop})q_i h_i\leq w_i$，
+间接效用变为$V_i=w_i/[(1+\tau_{prop})q_i]^\eta$。
+
+一次性土地出让收入$\theta q_i\Rh_i$是高度顺周期的（与$q_i$同向波动）；
+持有税基$q_i H_i$中的$H_i$调整缓慢，短期内基本不随房价同步下行，
+因此$T_i^{\rm prop}$对房价冲击的灵敏度远低于出让金收入。
+定义房地产税替代率$\phi_i\equiv T_i^{\rm prop}/(\theta q_i\Rh_i)$，
+则引入持有税后居住性用地出让金在财政中的占比由$s_{Rh,i}^G$下降为
+\begin{equation}
+  \tilde{s}_{Rh,i}^G = \frac{s_{Rh,i}^G}{1+\phi_i} < s_{Rh,i}^G.
+  \label{eq:prop_tax_share}
+\end{equation}
+由命题\ref{prop:spiral}，螺旋放大系数相应由
+$\Phi_i=\rho s_{Rh,i}^G\chi_i$降至$\tilde{\Phi}_i=\rho\tilde{s}_{Rh,i}^G\chi_i$，
+即房地产税通过压缩土地出让金份额、削弱财政顺周期性来改善长期增长。
+校准中取$\tau_{prop}=0.007$（参考重庆/上海试点税率），
+对应$\phi_i\approx 0.28$，$\tilde{s}_{Rh,i}^G\approx 0.78 s_{Rh,i}^G$。
+
+预算约束和债务动态为
+\begin{align}
+  G_{i,t}+r_DD_{i,t-1}&\leq \text{Rev}_{i,t}+\Delta D_{i,t},
+  \label{eq:gov_budget}\\
+  D_{i,t}&=(1+r_D)D_{i,t-1}+G_{i,t}-\text{Rev}_{i,t}.
+  \label{eq:debt}
+\end{align}
+联立财政收入和TFP方程，基准状态下（$\tau_{prop}=0$）房价对TFP的传导弹性为
+\begin{equation}
+  \frac{\partial\ln A_i}{\partial\ln q_i}=\rho s_{Rh,i}^G,
+  \label{eq:tfp_q_elas}
+\end{equation}
+其中$s_{Rh,i}^G=\theta q_i\Rh_i/G_i$为居住性用地收入相对于公共投入的份额；
+引入持有税后，该弹性相应降至$\rho\tilde{s}_{Rh,i}^G$。
+
+\begin{proposition}[土地财政螺旋放大效应]
+  \label{prop:spiral}
+  设$\rho>0$且$s_{Rh,i}^G>0$。
+  令$\chi_i>0$表示TFP变化通过工资、迁移、土地需求和债务约束反馈到土地财政收入的综合弹性，
+  则负向房价冲击对城市$i$实际GDP的总效应为
+  \begin{equation}
+    \frac{d\ln Y_i}{d\varepsilon^q}=\rho s_{Rh,i}^G\frac{1}{1-\Phi_i},
+    \quad \Phi_i=\rho s_{Rh,i}^G\chi_i\in(0,1).
+    \label{eq:spiral}
+  \end{equation}
+\end{proposition}
+该命题说明，土地财政依赖度越高、人口和土地需求对公共服务越敏感，房价冲击越容易被放大。
+\begin{corollary}[分配悖论]
+  \label{cor:paradox}
+  负向房价冲击在短期内可能通过降低住房成本改善总量福利，
+  但会通过$\Phi_i$的城市异质性扩大城市间福利差距。
+\end{corollary}
+
+建设用地指标跨区域交易通过财政转移缓冲上述螺旋。
+城市可出让拆旧复垦指标$TS_i$并获得转移收入：
+\begin{equation}
+  F_i=\begin{cases}
+    r_0\psi_i^{\rm sell}TS_i, & \tauy_i<0,\\
+    -r_i\psi_i^{\rm buy}\Delta\Ry_i, & \tauy_i>0,
+  \end{cases}
+  \label{eq:transfer}
+\end{equation}
+并进入有效公共投入：
+\begin{equation}
+  G_{i,t}^{\rm eff}=G_{i,t}+\lambda_FF_{i,t},
+  \quad A_{i,t}=\bar{A}_i^{1-\rho}(G_{i,t}^{\rm eff})^\rho.
+  \label{eq:G_transfer}
+\end{equation}
+市场出清要求调出指标总量等于调入指标总量：
+\begin{equation}
+  \sum_{\{i:\tauy_i<0\}}\psi_i^{\rm sell}TS_i
+  =\sum_{\{j:\tauy_j>0\}}\Delta\Ry_j.
+  \label{eq:land_clearing}
+\end{equation}
+在一般均衡中，劳动力市场、住房市场和土地指标市场同时出清。
+数值求解时，将均衡条件写为$3N$维非线性方程组：
+\begin{equation}
+  \begin{pmatrix}
+    d\bm{w}-\bm{w}_{\rm new}/\bm{w}\\
+    d\bm{L}-\bm{L}_{\rm new}/\bm{L}\\
+    d\bm{L}^h-\bm{L}_{\rm new}^h/\bm{L}^h
+  \end{pmatrix}=\bm{0}.
+  \label{eq:equilibrium}
+\end{equation}
+城市福利为$W_i=V_i m_{ii}^{-1/\kappa}$，总体福利为人口加权平均：
+\begin{equation}
+  \mathcal{W}=\sum_i\omega_iW_i, \quad \omega_i=\bar{N}_i/\bar{N}.
+  \label{eq:city_welfare}
+\end{equation}
+
+%% ================================================================
+%% 三、数据来源、参数校准与特征事实
+%% ================================================================
+\section{三、数据来源、参数校准与特征事实}
+
+\subsection{数据来源与参数校准}
+
+本文使用285个地级市2017年截面数据，
+涵盖GDP、从业人员、生产性建设用地、居住性建设用地、
+住房存量、建设用地指标和土地出让价格等变量。
+数据主要来自《中国城市统计年鉴2018》、国土资源部土地利用调查资料、
+地方政府财政决算报告以及2015年全国1\%人口抽样调查。
+生产率由生产函数反推，
+土地扭曲系数由方程（\ref{eq:wedge_ry}）和方程（\ref{eq:wedge_rh}）计算，
+迁移成本由迁移均衡条件反推。
+表\ref{tab:params}报告主要参数取值。
+
+\begin{table}[htbp]
+  \centering
+  \caption{模型参数校准}
+  \label{tab:params}
+  \begin{tabular}{llccl}
+    \toprule
+    类别 & 参数 & 符号 & 值 & 来源 \\
+    \midrule
+    生产 & 劳动产出弹性      & $\alpha$    & 0.67  & 工资份额法（工业企业数据库） \\
+         & 住房支出份额      & $\eta$      & 0.13  & 城乡居民收支调查 \\
+         & 住房生产劳动弹性  & $\sigma$    & 0.65  & 建筑业投入产出表 \\
+    \midrule
+    空间 & 迁移弹性（Fréchet形状参数）& $\kappa$    & 3.00  & 迁移矩阵矩条件校准 \\
+    \midrule
+    财政 & 财政—TFP弹性      & $\rho$      & 0.103 & 面板IV估计 \\
+         & 债务利率          & $r_D$       & 0.045 & 城投债票面利率均值 \\
+         & 土地收入份额      & $s_G$       & 0.40  & 地方财政决算 \\
+    \midrule
+    动态 & 折现因子          & $\beta$     & 0.960 & 标准值 \\
+         & 库存—价格弹性    & $\gamma$    & 0.08  & 城市房价去化周期回归 \\
+         & 房价持久性        & $\rho_q$    & 0.75  & 城市房价面板估计 \\
+    \midrule
+    土地 & 农转用补偿成本    & $r_0$       & 525   & 国土部征地补偿标准（万元/公顷） \\
+         & 生产用地基准价（调整前）& $p^y$  & 0.39  & 工业用地出让底价均值 \\
+         & 住宅用地基准价    & $p^h$       & 0.62  & 住宅用地成交价指数 \\
+         & 土地还原利率      & $r_c$       & 0.05  & 参考城镇地价动态监测体系 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+中国生产性建设用地的法定使用年限为50年，居住性建设用地为70年。
+若直接以出让价格比较两类土地，会因年限差异产生比较基准失真，
+高估生产性用地相对价格，进而低估生产性用地短缺城市的扭曲程度。
+本文引入土地还原利率$r_c=5\%$\footnote{%
+  5\%的土地还原利率为国内估价行业通行基准。
+  《城镇土地估价规程》（GB/T18508）与《农用地估价规程》（GB/T28406）
+  均将5\%列为基准还原利率区间下限；
+  《中国城市地价动态监测体系》建立的年度城市地价指数亦以5\%为折现参数。
+  部分高地价城市实践中采用4\%至5.5\%区间，
+  本文稳健性检验中对此进行了敏感性测试（详见第四节稳健性检验）。}，
+将生产性用地出让价格统一折算为等效70年价格：
+\begin{equation}
+  p_i^{y,adj}=p_i^y\cdot\frac{a_{70}(r_c)}{a_{50}(r_c)},
+  \quad a_T(r_c)=\frac{1-(1+r_c)^{-T}}{r_c},
+  \label{eq:land_adj}
+\end{equation}
+其中$a_{70}(0.05)=19.34$，$a_{50}(0.05)=18.26$，
+修正系数约为$19.34/18.26\approx 1.059$。
+这意味着生产性用地基准价在等年限基础上应上调约5.9\%，
+由0.39调整为$0.39\times1.059\approx0.413$（万元/平方米）。
+经此修正，方程（\ref{eq:wedge_ry}）中的扭曲系数计算更为准确：
+东部短缺城市的$\tauy_i$适度下调，东北过剩城市的$|\tauy_i|$同步减小，
+但``东高西低''的空间格局基本不变，说明年限修正不影响主要结论的方向性。
+
+迁移弹性参数$\kappa$由迁移矩阵矩条件校准。
+利用2010年人口普查（户籍登记地与居住地匹配）
+和2015年全国1\%人口抽样调查，
+构建285×285城市间流动比例矩阵$\hat{m}_{od}$（对角元素$\hat{m}_{oo}$为留守率）。
+在基准均衡下，利用迁移条件反推双边迁移成本：
+\begin{equation}
+  c_{od}=\frac{V_d^*}{V_o^*}\cdot\left(\frac{\hat{m}_{oo}}{\hat{m}_{od}}\right)^{1/\kappa},
+  \label{eq:mig_cost}
+\end{equation}
+其中$V_d^*$为基准均衡间接效用，
+$\hat{m}_{oo}$为城市内部留守概率（归一化参照）。
+采用最小化均方根误差的数值迭代格式，
+迁移矩阵拟合均方根误差为0.012（对数尺度），
+说明模型较好复现了观测流动模式。
+$\kappa=3.00$的校准值与\citet{redding2017}对中国的估计（2.5—3.5）吻合。
+
+模型拟合结果显示，
+GDP均方根误差为2.3\%，人口份额均方根误差为1.8\%，住房价格均方根误差为4.1\%，
+说明校准模型能够较好复现城市层面的主要均衡状态。
+本文的反事实实验均以该基准均衡为参照，报告相对于基准状态的百分比变化。
+
+\subsection{特征事实}
+
+房地产下行首先表现为土地出让收入的趋势性收缩。
+图\ref{fig:land_finance}显示，2010—2021年土地出让收入整体上升；
+2021年后连续回落，地方财政对土地市场的顺周期暴露明显增强。
+图\ref{fig:sales}显示，商品房销售面积和70城新建住宅价格指数在2021年后同步调整，
+说明土地财政收缩并非孤立财政事件，而是房地产市场量价调整的财政反映。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=13cm, height=7cm,
+  xlabel={\zihao{-5} 年份},
+  ylabel={\zihao{-5} 土地出让收入（万亿元）},
+  xmin=2009.5, xmax=2023.5,
+  ymin=0, ymax=10,
+  xtick={2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023},
+  xticklabels={2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023},
+  x tick label style={rotate=45,anchor=east,font=\zihao{-6}},
+  y tick label style={font=\zihao{-5}},
+  legend style={at={(0.05,0.95)},anchor=north west,font=\zihao{-6}},
+  ymajorgrids=true,
+  grid style={dashed,gray!30},
+  axis line style={gray!60},
+  tick style={gray!60},
+]
+\addplot[color=chinaRed, thick, mark=*, mark size=2pt] coordinates {
+  (2010,2.91)(2011,3.32)(2012,2.77)(2013,4.13)
+  (2014,4.04)(2015,3.28)(2016,3.75)(2017,5.21)
+  (2018,6.50)(2019,7.78)(2020,8.41)(2021,8.71)
+  (2022,6.69)(2023,5.80)
+};
+\addlegendentry{土地出让收入}
+\draw[dashed,gray,thick] (axis cs:2021,0) -- (axis cs:2021,8.71);
+\node[font=\zihao{-6},gray] at (axis cs:2021.3,9.0) {峰值8.71万亿};
+\node[font=\zihao{-6},chinaRed] at (axis cs:2022.5,6.0) {$\downarrow33\%$};
+\end{axis}
+\end{tikzpicture}
+\caption{全国土地出让收入趋势（2010—2023年）。
+  数据来源：财政部年度决算报告、Wind金融数据库。}
+\label{fig:land_finance}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=13cm, height=7cm,
+  xlabel={\zihao{-5} 季度},
+  ylabel={\zihao{-5} 价格/销售指数（2018Q1=100）},
+  xmin=0.5, xmax=24.5,
+  ymin=85, ymax=125,
+  xtick={1,5,9,13,17,21},
+  xticklabels={2018Q1,2019Q1,2020Q1,2021Q1,2022Q1,2023Q1},
+  x tick label style={font=\zihao{-6}},
+  y tick label style={font=\zihao{-5}},
+  legend style={at={(0.97,0.97)},anchor=north east,font=\zihao{-6}},
+  ymajorgrids=true,
+  grid style={dashed,gray!30},
+  axis line style={gray!60},
+]
+\addplot[color=darkBlue,thick,mark=square*,mark size=1.5pt] coordinates {
+  (1,100)(2,100.8)(3,101.6)(4,102.2)(5,102.8)(6,103.5)(7,104.2)(8,104.7)
+  (9,104.5)(10,105.3)(11,106.1)(12,106.6)(13,107.2)(14,108.4)(15,109.8)(16,111.2)
+  (17,112.5)(18,113.4)(19,113.8)(20,112.6)(21,110.8)(22,109.2)(23,108.1)(24,106.5)
+};
+\addlegendentry{70城新建住宅价格指数}
+\addplot[color=chinaRed,thick,dashed,mark=triangle*,mark size=1.5pt] coordinates {
+  (1,108)(2,110)(3,112)(4,111)(5,112)(6,114)(7,113)(8,112)
+  (9,109)(10,113)(11,115)(12,116)(13,117)(14,118)(15,119)(16,120)
+  (17,121)(18,122)(19,120)(20,115)(21,108)(22,100)(23,95)(24,92)
+};
+\addlegendentry{商品房销售面积指数}
+\draw[dashed,gray,thick] (axis cs:17.5,85) -- (axis cs:17.5,125);
+\node[font=\zihao{-6},gray,rotate=90] at (axis cs:17.8,100) {2021年三季度转折};
+\end{axis}
+\end{tikzpicture}
+\caption{商品房销售面积与70城新建住宅价格指数（2018—2023年）。
+  数据来源：国家统计局、住建部。}
+\label{fig:sales}
+\end{figure}
+
+空间层面的事实更加接近本文模型所要解释的机制。
+图\ref{fig:distortion}显示，不同省份生产性用地扭曲系数差异显著，
+经使用年限修正后，东部短缺与东北过剩的空间格局依然鲜明。
+图\ref{fig:scatter}进一步表明，
+土地财政依赖与城市增长之间并不存在单调关系：
+在增长型城市中，土地财政可能通过公共投入支持增长；
+在收缩型城市中，土地财政依赖越深，
+房地产下行时受到的生产率冲击和财政压力越大。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=13cm, height=7.5cm,
+  xlabel={\zihao{-5}},
+  ylabel={\zihao{-5} 生产性用地扭曲系数 $\tau^y_i$ 均值},
+  ybar, bar width=8pt,
+  ymin=-0.8, ymax=1.6,
+  symbolic x coords={京,津,沪,苏,浙,粤,鲁,闽,渝,川,皖,鄂,湘,赣,豫,冀,晋,陕,桂,黔,云,新,甘,蒙,吉,辽,黑},
+  xtick=data,
+  x tick label style={font=\zihao{-6}},
+  y tick label style={font=\zihao{-5}},
+  enlarge x limits=0.03,
+  ymajorgrids=true, grid style={dashed,gray!30},
+  axis line style={gray!60},
+  legend style={at={(0.98,0.98)},anchor=north east,font=\zihao{-6}},
+]
+\addplot[fill=darkBlue!70,draw=darkBlue] coordinates {
+  (京,1.18)(津,0.65)(沪,0.98)(苏,0.72)(浙,0.85)(粤,1.05)(鲁,0.42)(闽,0.61)
+  (渝,0.35)(川,0.12)(皖,0.18)(鄂,0.25)(湘,0.08)(赣,0.05)(豫,0.15)
+  (冀,0.03)(晋,-0.18)(陕,0.02)(桂,-0.12)(黔,-0.25)(云,-0.15)
+  (新,-0.45)(甘,-0.38)(蒙,-0.52)(吉,-0.62)(辽,-0.35)(黑,-0.72)
+};
+\addlegendentry{$\tau^y>0$：短缺；$\tau^y<0$：过剩}
+\draw[dashed,chinaRed,thick] (axis cs:京,0) -- (axis cs:黑,0);
+\node[font=\zihao{-6},chinaRed] at (axis cs:陕,0.1) {零线};
+\end{axis}
+\end{tikzpicture}
+\caption{各省（区）生产性用地扭曲系数均值（2017年，经年限修正）。
+  扭曲系数由方程（\ref{eq:wedge_ry}）从城市数据直接计算，
+  土地价格已按方程（\ref{eq:land_adj}）折算至70年等效基准。}
+\label{fig:distortion}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12.5cm, height=7.5cm,
+  xlabel={\zihao{-5} 土地出让收入占地方财政比重（\%）},
+  ylabel={\zihao{-5} 2015—2020年人均GDP年均增速（\%）},
+  xmin=5, xmax=75,
+  ymin=-3, ymax=14,
+  ymajorgrids=true, xmajorgrids=true,
+  grid style={dashed,gray!20},
+  legend style={at={(0.97,0.05)},anchor=south east,font=\zihao{-6}},
+]
+\addplot[only marks, mark=*, color=darkBlue, opacity=0.6, mark size=2pt] coordinates {
+  (45,8.2)(52,7.8)(48,9.1)(55,10.2)(60,11.5)(42,8.8)(50,9.5)(65,12.1)
+  (38,7.5)(56,10.8)(44,8.6)(63,11.8)(40,7.9)(58,10.1)(47,9.3)(53,9.8)
+  (61,11.2)(37,7.3)(57,10.5)(43,8.4)(68,12.8)(35,7.1)(54,9.6)(46,8.9)
+};
+\addlegendentry{增长型城市（$\tau^y_i > 0.3$）}
+\addplot[only marks, mark=square*, color=chinaRed, opacity=0.6, mark size=2pt] coordinates {
+  (28,-0.5)(32,1.2)(25,-1.8)(35,0.8)(22,-2.3)(18,-1.5)(30,0.5)(20,-2.0)
+  (38,2.1)(15,-2.8)(26,-0.2)(33,1.5)(21,-1.9)(27,0.1)(36,2.5)(17,-2.5)
+  (23,-1.2)(31,1.0)(19,-2.1)(34,1.8)(24,-0.8)(16,-2.6)(29,0.3)(37,2.8)
+};
+\addlegendentry{收缩型城市（$\tau^y_i < -0.2$）}
+\addplot[color=darkBlue, thick, domain=35:70] {0.18*x + 0.1};
+\addplot[color=chinaRed, thick, dashed, domain=15:40] {0.12*x - 5.2};
+\draw[gray, dashed] (axis cs:5,0) -- (axis cs:75,0);
+\end{axis}
+\end{tikzpicture}
+\caption{土地财政依赖度与人均GDP增速关系（2015—2020年）。
+  数据来源：作者基于城市统计年鉴和模型校准计算。}
+\label{fig:scatter}
+\end{figure}
+
+上述事实形成三个需要模型解释的悖论：
+（1）房价下降可能降低住房成本，却会通过财政—TFP渠道损害弱势城市的长期增长；
+（2）土地财政在扩张期支撑公共投入，却在下行期放大财政收缩；
+（3）建设用地交易若只看效率目标，可能忽视区域差距；
+若只看均衡目标，又可能牺牲总量增长。
+因此，政策评估必须同时考察GDP、福利和城市间差距。
+
+%% ================================================================
+%% 四、反事实分析、动态响应与稳健性检验
+%% ================================================================
+\section{四、反事实分析、动态响应与稳健性检验}
+
+\subsection{情景设计与长期效应}
+
+本文设置八类反事实情景：
+房地产下行冲击三类（房价下跌、土地收入收缩、库存增加），
+制度改革五类（跨区域土地指标交易—省内、跨区域土地指标交易—跨省、
+房地产税改革、核心城市人口流入、收缩城市土地退出与劳动力流动壁垒降低）。
+表\ref{tab:cf}报告长期均衡结果。
+
+\begin{table}[htbp]
+  \centering
+  \caption{反事实实验结果汇总}
+  \label{tab:cf}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lcccc}
+    \toprule
+    \multirow{2}{*}{实验情景}
+    & \multicolumn{4}{c}{相对基准变化（\%）}\\
+    \cmidrule(lr){2-5}
+    & $\Delta$实际GDP & $\Delta$GDP基尼 & $\Delta$总福利 & $\Delta$福利泰尔 \\
+    \midrule
+    实验1：房价下降10\%           & $-0.61$ & $+1.24$ & $+0.89$ & $+2.16$ \\
+    实验2：土地收入下降30\%       & $-1.24$ & $+2.35$ & $-1.24$ & $+3.45$ \\
+    实验3：库存增加50\%           & $-0.48$ & $+1.57$ & $-0.35$ & $+2.34$ \\
+    \midrule
+    实验4a：省内建设用地交易      & $+0.18$ & $-0.42$ & $+0.28$ & $-0.51$ \\
+    实验4b：跨省建设用地交易      & $+0.32$ & $-0.81$ & $+0.51$ & $-0.93$ \\
+    实验5：房地产税改革           & $+0.78$ & $-1.23$ & $+0.45$ & $-1.67$ \\
+    实验6：核心城市人口流入       & $+0.23$ & $+0.35$ & $+0.18$ & $+0.42$ \\
+    实验7：收缩城市土地退出       & $+0.19$ & $-0.57$ & $+0.23$ & $-0.79$ \\
+    实验8：劳动力流动壁垒降低10\% & $+0.35$ & $-0.38$ & $+0.42$ & $-1.12$ \\
+    \midrule
+    最优组合（$\lambda=0.6$帕累托解）& $+0.41$ & $-0.65$ & $+0.53$ & $-1.15$ \\
+    \bottomrule
+  \end{tabular}
+  }
+  \vspace{4pt}
+  \begin{minipage}{0.95\textwidth}
+  {\zihao{-6}\textit{注：}
+    GDP基尼系数和福利泰尔指数变化为相对基准的百分比变化，正号表示不平等加剧。
+    最优组合为对跨省建设用地交易（实验4b）进行帕累托最优指标分配，
+    求解方程（\ref{eq:pareto}）及约束（C1）—（C3）所得；$\lambda=0.6$时效率—公平目标同时最优，
+    空间配置结果详见正文。
+    所有结果基于285城市2017年数据校准。}
+  \end{minipage}
+\end{table}
+
+表\ref{tab:cf}报告八类反事实情景的长期均衡结果。在下行冲击方面，房价下降10\%（实验1）使实际GDP下降0.61\%，但住房成本同步降低推动总体福利短期改善0.89\%，福利泰尔指数则上升2.16\%，说明总量福利的短期改善与区域公平的同步恶化并存。土地出让收入直接下降30\%（实验2）导致GDP下降1.24\%且福利同步恶化，影响强度均超过实验1，原因在于纯财政收缩渠道剥离了房价下跌带来的住房成本缓冲，冲击更为直接持久。库存增加50\%（实验3）的效应介于两者之间，GDP下降0.48\%，福利泰尔指数上升2.34\%，反映库存压力通过预期渠道间接传导至财政和TFP。
+
+将跨区域交易分为省内（实验4a）和跨省（实验4b）两个层次，结果揭示出明显的层次差异：省内交易的GDP增益仅为0.18\%（跨省的56\%），福利泰尔指数降幅为0.51\%（跨省的55\%）。这一差距源于省内扭曲配对的质量：同省城市之间扭曲差距通常较小（例如同省内同时出现严重过剩和严重短缺的概率低于跨省对），限制了省内交易的效率改进空间。跨省交易能够将东北和西北的严重过剩指标流转至长三角和粤港澳大湾区的严重短缺城市，实现更大幅度的要素再配置效益。上述结果表明，先省内后跨省的渐进式改革路径预计将累计释放GDP增益从0.18\%扩大至0.32\%。
+
+寻找效率与公平统筹的最优土地配置方案是政策设计的核心难题。为此，本文构造如下社会规划问题：
+\begin{equation}
+  \max_{\{TS_i,\Delta\Ry_j\}}\;
+  \lambda\cdot\Delta\text{GDP}-(1-\lambda)\cdot\Delta\text{Theil},
+  \quad \lambda\in[0,1],
+  \label{eq:pareto}
+\end{equation}
+受以下约束：
+\begin{align}
+  \text{（C1）} \quad &
+    \sum_{i\in\mathcal{S}} TS_i = \sum_{j\in\mathcal{R}} \Delta\Ry_j
+    \qquad\text{（指标供需平衡：全国调出量等于调入量）}\notag\\
+  \text{（C2）} \quad &
+    0 \;\le\; TS_i \;\le\; \bar{TS}_i, \quad \forall\, i\in\mathcal{S}
+    \qquad\text{（出让上限：不超过城市$i$的低效闲置存量$\bar{TS}_i$）}\notag\\
+  \text{（C3）} \quad &
+    \Delta\Ry_j \;\ge\; 0, \quad \forall\, j\in\mathcal{R}
+    \qquad\text{（非负受让：受让城市新增建设用地非负）}\notag
+\end{align}
+其中$\mathcal{S}$为可出让城市集合（收缩城市），
+$\mathcal{R}$为可受让城市集合（人口净流入城市），
+$\lambda$为增长权重，$1-\lambda$为公平权重。
+数值求解采用带约束的网格搜索法（scipy.optimize.minimize，SLSQP算法），
+在$\lambda\in\{0.0,0.1,\ldots,1.0\}$上逐点搜索，
+并通过（C1）—（C3）保证可行性。
+数值模拟结果表明，当$\lambda\approx0.60$时，
+全国整体处于帕累托改进前沿：
+GDP增益约0.41\%，福利泰尔指数降幅约1.15\%，
+均优于等面积跨省交易（实验4b）。
+最优配置方案的空间特征呈现``核心受益、边缘补偿''格局：
+指标主要从东北和西北严重过剩城市流向长三角和粤港澳大湾区边缘地带，
+调出城市获得转移收入以维持公共服务，
+兼顾了受让方的用地效率和出让方的财政稳定。
+
+劳动力流动壁垒的降低对土地制度改革具有显著影响。实验8模拟所有城市对之间的迁移成本$c_{od}$同步降低10\%，
+对应户籍制度改革后的流动便利化情景。
+结果显示GDP提高0.35\%，福利泰尔指数下降1.12\%。
+与跨区域建设用地交易（实验4b）的互补性在于：
+户籍制度放宽使人口更快向高效率城市集聚，
+而土地指标流转则确保高效率城市的居住用地供给同步扩张，
+防止人口集聚被高房价完全抵消。
+两类政策的联合效应呈现次加性（sub-additivity）特征：
+单独实施4b或8分别产生0.32\%和0.35\%的GDP增益，线性加总为0.67\%；
+而联合实施的GDP增益约为0.58\%，小于简单加总（$0.58 < 0.67$）。
+土地跨省流转与户籍制度改革在纠正空间错配方面具有部分替代性——
+两类政策均以降低生产要素的空间错配为目标，
+先实施其中一项之后，空间均衡已向最优方向调整，
+另一项政策所能带来的边际改善空间因此相应收窄，
+导致边际效益递减（diminishing marginal returns to misallocation reduction）。
+这一结论对于政策排序具有实际指导意义：
+改革推进中应优先实施效率—公平收益更大的举措（如跨省土地指标交易），
+而非期望多政策同步推进带来简单叠加的收益。
+
+\subsection{动态响应}
+
+长期反事实结果只说明稳态间差异，DSGE动态模块进一步刻画冲击发生后的调整路径。
+
+图\ref{fig:irf_q}报告房价下降10\%的八变量脉冲响应。
+
+\begin{figure}[htbp]
+\centering
+\caption{脉冲响应函数：聚合房价下降冲击（$\varepsilon^q=-10\%$）}
+\label{fig:irf_q}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=4 by 2,horizontal sep=1.8cm,vertical sep=2.0cm},
+  width=6.5cm, height=4.0cm,
+  xmin=0, xmax=19, xtick={0,4,8,12,16},
+  xticklabel style={font=\zihao{-6}},
+  yticklabel style={font=\zihao{-6}},
+  xlabel={\zihao{-6} 年份},
+  xlabel style={at={(1,0)},anchor=north east},
+  ylabel style={font=\zihao{-6}},
+  ymajorgrids=true, grid style={dashed,gray!25},
+  tick style={gray!50}, axis line style={gray!60},
+  title style={font=\zihao{-5}\bfseries,yshift=-2pt},
+]
+\nextgroupplot[title={(a) 住房价格 $q$（\%）},ymin=-12,ymax=1.5,
+  ylabel={\zihao{-6} \%偏离稳态}]
+\addplot[chinaRed,thick] coordinates {
+  (0,-10.0)(1,-7.5)(2,-5.6)(3,-4.2)(4,-3.2)(5,-2.4)(6,-1.8)(7,-1.3)
+  (8,-1.0)(9,-0.7)(10,-0.6)(11,-0.4)(12,-0.3)(13,-0.2)(14,-0.2)
+  (15,-0.1)(16,-0.1)(17,-0.1)(18,0.0)(19,0.0)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(b) 土地出让收入 $\Pi^G$（\%）},ymin=-3,ymax=0.5]
+\addplot[darkBlue,thick] coordinates {
+  (0,-1.2)(1,-1.9)(2,-2.2)(3,-2.2)(4,-2.2)(5,-2.0)(6,-1.8)(7,-1.6)
+  (8,-1.4)(9,-1.2)(10,-1.0)(11,-0.9)(12,-0.7)(13,-0.6)(14,-0.5)
+  (15,-0.4)(16,-0.4)(17,-0.3)(18,-0.2)(19,-0.2)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(c) 地方公共投入 $G$（\%）},ymin=-1.2,ymax=0.2]
+\addplot[darkBlue,thick,dashed] coordinates {
+  (0,-0.5)(1,-0.7)(2,-0.9)(3,-0.9)(4,-0.9)(5,-0.8)(6,-0.7)(7,-0.6)
+  (8,-0.6)(9,-0.5)(10,-0.4)(11,-0.4)(12,-0.3)(13,-0.3)(14,-0.2)
+  (15,-0.2)(16,-0.1)(17,-0.1)(18,-0.1)(19,-0.1)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(d) 全要素生产率 $A$（\%）},ymin=-0.5,ymax=0.08]
+\addplot[chinaRed,thick,dashed] coordinates {
+  (0,-0.05)(1,-0.12)(2,-0.19)(3,-0.25)(4,-0.31)(5,-0.34)(6,-0.37)(7,-0.38)
+  (8,-0.38)(9,-0.37)(10,-0.36)(11,-0.34)(12,-0.32)(13,-0.30)(14,-0.28)
+  (15,-0.25)(16,-0.23)(17,-0.21)(18,-0.19)(19,-0.17)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(e) 实际GDP $Y$（\%）},ymin=-0.7,ymax=0.1,
+  ylabel={\zihao{-6} \%偏离稳态}]
+\addplot[darkBlue,very thick] coordinates {
+  (0,-0.07)(1,-0.18)(2,-0.29)(3,-0.38)(4,-0.46)(5,-0.51)(6,-0.55)(7,-0.57)
+  (8,-0.57)(9,-0.56)(10,-0.54)(11,-0.51)(12,-0.48)(13,-0.45)(14,-0.42)
+  (15,-0.38)(16,-0.35)(17,-0.31)(18,-0.28)(19,-0.25)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(f) 居民福利 $V$（\%）},ymin=-0.6,ymax=1.5]
+\addplot[chinaRed,very thick] coordinates {
+  (0,1.25)(1,0.65)(2,0.15)(3,-0.15)(4,-0.35)(5,-0.45)(6,-0.47)(7,-0.43)
+  (8,-0.37)(9,-0.30)(10,-0.24)(11,-0.18)(12,-0.13)(13,-0.10)(14,-0.07)
+  (15,-0.04)(16,-0.03)(17,-0.02)(18,0.0)(19,0.0)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(g) 地方债务率 $D$（\%）},ymin=0,ymax=2.2]
+\addplot[darkBlue,thick] coordinates {
+  (0,0.07)(1,0.19)(2,0.33)(3,0.47)(4,0.63)(5,0.77)(6,0.92)(7,1.06)
+  (8,1.19)(9,1.32)(10,1.44)(11,1.56)(12,1.66)(13,1.75)(14,1.83)
+  (15,1.88)(16,1.90)(17,1.90)(18,1.87)(19,1.82)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(h) 住宅库存率 $IS$（\%）},ymin=-0.3,ymax=2.8]
+\addplot[chinaRed,thick,dashed] coordinates {
+  (0,0.5)(1,1.2)(2,1.8)(3,2.2)(4,2.4)(5,2.3)(6,2.1)(7,1.8)
+  (8,1.5)(9,1.2)(10,0.9)(11,0.7)(12,0.5)(13,0.4)(14,0.3)
+  (15,0.2)(16,0.1)(17,0.1)(18,0.0)(19,0.0)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+\end{groupplot}
+\end{tikzpicture}
+}
+\vspace{4pt}
+\begin{minipage}{0.95\textwidth}
+{\zihao{-6}\textit{注：}
+  基于Dynare 5.x一阶线性近似，参数取表\ref{tab:params}校准值。
+  冲击为一次性聚合房价负冲击$\varepsilon^q=-10\%$；无财政冲击（$\varepsilon^G=0$）。
+  实线为GDP与福利，虚线为中间传导变量；水平虚线为稳态基准（零偏离）。}
+\end{minipage}
+\end{figure}
+
+图\ref{fig:irf_q}揭示了三条关键动态规律。GDP的响应路径呈典型的驼峰状（Hump-shaped Response），这源于"土地财政—公共投入"这一内部传导机制的作用：冲击发生当期（$t=0$），GDP仅下降0.07\%，冲击效应被平滑并延后放大；随土地出让收入在$t=2$—$4$期持续恶化至峰值约$-2.2\%$，GDP下降在第7—8期才达到峰值约$-0.57\%$，约为当期降幅的8倍。土地出让收入的下行轨迹明显滞后于房价：房价$q$在$t=0$骤跌$-10\%$后单调回升，而土地出让收入在$t=0$仅降$-1.2\%$，在房价已开始回暖的$t=2$至$t=4$期反而持续恶化至峰值。这一时滞源于两重摩擦：开发商拿地决策须观察若干期的库存去化率后才大幅压缩计划，而地方政府年度供地计划亦具有一定刚性，难以随市场信号实时调减。与此同时，福利（面板f）与GDP（面板e）的初期响应方向相反——冲击当期住房成本大幅下降，福利净上升1.25\%，约在第6期转负，印证了推论\ref{cor:paradox}所揭示的分配悖论。地方债务（面板g）则持续累积，即使房价逐渐恢复后仍长期高于稳态，反映财政风险的消化周期远长于房价调整本身。
+
+图\ref{fig:irf_G}报告土地出让收入下降30\%的脉冲响应，
+该冲击可视为"纯财政收缩"冲击。
+
+\begin{figure}[htbp]
+\centering
+\caption{脉冲响应函数：土地出让收入下降冲击（$\varepsilon^G=-30\%$）}
+\label{fig:irf_G}
+\resizebox{0.9\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=3 by 2,horizontal sep=1.8cm,vertical sep=2.0cm},
+  width=7.0cm, height=4.0cm,
+  xmin=0, xmax=19, xtick={0,4,8,12,16},
+  xticklabel style={font=\zihao{-6}},
+  yticklabel style={font=\zihao{-6}},
+  xlabel={\zihao{-6} 年份},
+  xlabel style={at={(1,0)},anchor=north east},
+  ylabel style={font=\zihao{-6}},
+  ymajorgrids=true, grid style={dashed,gray!25},
+  tick style={gray!50}, axis line style={gray!60},
+  title style={font=\zihao{-5}\bfseries,yshift=-2pt},
+]
+\nextgroupplot[title={(a) 土地出让收入 $\Pi^G$（\%）},ymin=-7,ymax=0.5,
+  ylabel={\zihao{-6} \%偏离稳态}]
+\addplot[chinaRed,thick] coordinates {
+  (0,-6.0)(1,-4.8)(2,-3.8)(3,-3.1)(4,-2.5)(5,-2.0)(6,-1.6)(7,-1.3)
+  (8,-1.0)(9,-0.8)(10,-0.6)(11,-0.5)(12,-0.4)(13,-0.3)(14,-0.2)
+  (15,-0.2)(16,-0.1)(17,-0.1)(18,-0.1)(19,0.0)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(b) 地方公共投入 $G$（\%）},ymin=-3,ymax=0.5]
+\addplot[darkBlue,thick] coordinates {
+  (0,-2.4)(1,-1.9)(2,-1.5)(3,-1.2)(4,-1.0)(5,-0.8)(6,-0.6)(7,-0.5)
+  (8,-0.4)(9,-0.3)(10,-0.3)(11,-0.2)(12,-0.2)(13,-0.1)(14,-0.1)
+  (15,-0.1)(16,0.0)(17,0.0)(18,0.0)(19,0.0)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(c) 全要素生产率 $A$（\%）},ymin=-0.7,ymax=0.1]
+\addplot[darkBlue,thick,dashed] coordinates {
+  (0,-0.25)(1,-0.41)(2,-0.51)(3,-0.56)(4,-0.57)(5,-0.57)(6,-0.55)(7,-0.52)
+  (8,-0.48)(9,-0.44)(10,-0.40)(11,-0.36)(12,-0.33)(13,-0.30)(14,-0.27)
+  (15,-0.24)(16,-0.22)(17,-0.20)(18,-0.18)(19,-0.16)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(d) 实际GDP $Y$（\%）},ymin=-1.0,ymax=0.1,
+  ylabel={\zihao{-6} \%偏离稳态}]
+\addplot[darkBlue,very thick] coordinates {
+  (0,-0.37)(1,-0.62)(2,-0.76)(3,-0.84)(4,-0.86)(5,-0.86)(6,-0.83)(7,-0.78)
+  (8,-0.73)(9,-0.66)(10,-0.60)(11,-0.54)(12,-0.49)(13,-0.45)(14,-0.41)
+  (15,-0.36)(16,-0.33)(17,-0.30)(18,-0.27)(19,-0.24)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(e) 居民消费 $c$（\%）},ymin=-0.6,ymax=0.1]
+\addplot[chinaRed,thick] coordinates {
+  (0,-0.19)(1,-0.31)(2,-0.38)(3,-0.42)(4,-0.43)(5,-0.43)(6,-0.41)(7,-0.39)
+  (8,-0.36)(9,-0.33)(10,-0.30)(11,-0.27)(12,-0.25)(13,-0.23)(14,-0.20)
+  (15,-0.18)(16,-0.17)(17,-0.15)(18,-0.14)(19,-0.12)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+
+\nextgroupplot[title={(f) 地方债务率 $D$（\%）},ymin=0,ymax=4.0]
+\addplot[chinaRed,very thick,dashed] coordinates {
+  (0,0.24)(1,0.60)(2,1.00)(3,1.42)(4,1.82)(5,2.18)(6,2.50)(7,2.76)
+  (8,2.99)(9,3.17)(10,3.31)(11,3.42)(12,3.50)(13,3.54)(14,3.55)
+  (15,3.54)(16,3.50)(17,3.45)(18,3.38)(19,3.30)};
+\draw[gray,dashed] (axis cs:0,0)--(axis cs:19,0);
+\end{groupplot}
+\end{tikzpicture}
+}
+\vspace{4pt}
+\begin{minipage}{0.95\textwidth}
+{\zihao{-6}\textit{注：}
+  冲击为$\varepsilon^G=-30\%$，无聚合房价冲击（$\varepsilon^q=0$）。
+  纯财政收缩渠道的独立效应；
+  GDP峰值降幅（约$-0.86\%$）出现在第4—5期，
+  约为当期降幅（$-0.37\%$）的2.3倍，延迟效应显著。}
+\end{minipage}
+\end{figure}
+
+比较两类冲击的IRF，有三点值得关注。纯财政冲击（$\varepsilon^G$）的GDP峰值降幅更大（$-0.86\%$ vs. $-0.57\%$），原因在于其剥离了"房价下降—住房成本降低"的红利效应：房价冲击（$\varepsilon^q$）在压缩财政的同时，通过降低居民生活成本为短期福利提供部分缓冲；纯财政冲击则没有这一缓冲，全部损失转化为供给侧损失，正是将$\varepsilon^q$与$\varepsilon^G$拆分对比的模型优势所在。债务累积路径亦更为陡峭（面板f），峰值在第14—15期才出现，远晚于房价冲击下的第16—17期见顶，表明财政收缩风险的消化周期可达10—15年。两类冲击均呈现驼峰状响应路径，从而验证了"土地财政—公共投入"这一内部传导机制是产生冲击被平滑并延后放大效应的核心摩擦来源。
+
+\subsection{稳健性检验}
+
+表\ref{tab:robust}报告围绕基准值±20\%扰动时跨省建设用地交易（实验4b）的结果。
+所有参数扰动下，GDP和总福利均上升、基尼系数和泰尔指数均下降，
+方向性结论稳健。
+
+\begin{table}[htbp]
+  \centering
+  \caption{参数敏感性检验：以跨省建设用地交易为例}
+  \label{tab:robust}
+  \resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccccc}
+    \toprule
+    参数设定 & 参数值 & $\Delta$GDP & $\Delta$GDP基尼 & $\Delta$总福利 & $\Delta$福利泰尔 \\
+    \midrule
+    基准结果   & --    & +0.32 & $-0.81$ & +0.51 & $-0.93$ \\
+    $\alpha$较低 & 0.55 & +0.27 & $-0.76$ & +0.44 & $-0.88$ \\
+    $\alpha$较高 & 0.80 & +0.36 & $-0.84$ & +0.56 & $-0.96$ \\
+    $\eta$较低   & 0.10 & +0.30 & $-0.78$ & +0.47 & $-0.90$ \\
+    $\eta$较高   & 0.16 & +0.34 & $-0.83$ & +0.54 & $-0.95$ \\
+    $\kappa$较低 & 2.00 & +0.29 & $-0.74$ & +0.48 & $-0.85$ \\
+    $\kappa$较高 & 4.00 & +0.35 & $-0.87$ & +0.55 & $-1.01$ \\
+    $\sigma$较低 & 0.55 & +0.25 & $-0.70$ & +0.42 & $-0.82$ \\
+    $\sigma$较高 & 0.75 & +0.39 & $-0.91$ & +0.60 & $-1.05$ \\
+    $\rho$较低（基础设施弹性下限）   & 0.05 & +0.19 & $-0.52$ & +0.33 & $-0.64$ \\
+    $\rho$基准   & 0.103& +0.32 & $-0.81$ & +0.51 & $-0.93$ \\
+    $\rho$中等（Calderón-Servén估计）& 0.20 & +0.51 & $-1.09$ & +0.74 & $-1.28$ \\
+    $\rho$较高（Aschauer估计下界）   & 0.30 & +0.69 & $-1.34$ & +0.96 & $-1.56$ \\
+    \bottomrule
+  \end{tabular}
+  }
+  \vspace{4pt}
+  \begin{minipage}{0.95\textwidth}
+  {\zihao{-6}\textit{注：}
+    $\rho$的区间参考Aschauer（1989）的原始估计（约0.30—0.39）、
+    Calderón and Servén（2008）的跨国面板估计（0.12—0.20）
+    和本文IV估计（0.103）三个锚点。
+    在$\rho=0.05$的极保守假设下，
+    跨省交易的GDP增益仍达+0.19\%，方向性结论不变。}
+  \end{minipage}
+\end{table}
+
+为检验基准模型中迁移成本恒定假设的影响，
+本文模拟迁移成本$c_{od}$同步降低10\%（实验8）与跨省建设用地交易（实验4b）的联合效应。
+结果如前所述：两类政策的联合GDP增益（0.58\%）低于线性加总（0.67\%），
+体现次加性特征（部分替代效应）。
+这一结果进一步提示，忽视迁移壁垒变化的静态模型
+在估算土地制度改革效果时存在系统性偏误：
+当劳动力流动障碍已被部分内化时，土地改革的实际边际效益会被高估，
+反之亦然，在政策评估中需对两类改革的交叉效应予以明确建模。
+
+此外，对公共投入产出弹性（$\rho$）进行文献区间测试，结果报告于表\ref{tab:robust}最后三行。从$\rho=0.05$（极保守假设）到$\rho=0.30$（Aschauer估计下界），跨省建设用地交易的GDP增益区间为0.19\%至0.69\%，方向性结论在整个参数区间内保持稳健。
+
+%% ================================================================
+%% 五、研究结论与政策启示
+%% ================================================================
+\section{五、研究结论与政策启示}
+
+本文从房地产下行周期出发，
+构建包含土地财政内生机制、两类建设用地、Fréchet异质性迁移框架
+和DSGE动态模块的量化空间一般均衡模型，
+评估土地财政收缩、建设用地错配和长期增长之间的关系。
+研究表明，房价下跌会通过土地出让收入收缩压缩地方公共投入，
+并进一步降低城市TFP；
+土地财政依赖度越高、人口和土地需求反馈越强的城市，受到的冲击越大。
+建设用地指标跨区域交易能够同时改善效率和公平，
+跨省交易的效益显著优于省内交易，
+是近期可操作的帕累托改进工具；
+房地产税改革通过削弱财政顺周期性带来最大的长期增长收益；
+降低劳动力流动壁垒与土地指标流转存在部分替代效应，
+联合改革呈现次加性特征（联合增益0.58\%低于简单加总0.67\%），
+凸显了政策排序的重要性。
+
+上述结论对应三方面政策启示。
+第一，应加快建设用地指标全国统一市场化流转，
+从省内逐步扩展至跨省，并探索最优权重下的帕累托最优指标分配方案，
+在增长与公平之间取得最佳平衡。
+第二，应建立收缩城市土地退出与补偿机制，
+以中央转移支付和复垦激励缓解地方财政短期压力。
+第三，应稳妥推进以房地产税为核心的地方财政结构转型，
+并配套核心城市居住性用地供给扩张和户籍制度改革，
+实现土地、劳动力和财政三类制度摩擦的协同化解。
+
+从更宏观的战略视角看，上述政策建议与「十五五」规划的前期部署高度契合。
+建设用地指标的跨区域市场化流转与土地财政的软着陆，
+不仅是化解当前阶段地方债务风险、平滑房地产下行冲击的近期工具，
+更是「十五五」时期畅通国内大循环、
+引导要素向新质生产力集聚区自由流动的关键制度保障。
+资本、劳动力和土地要素能够更高效地向高生产率城市汇集，
+不仅能缓解土地财政对城市TFP的拖累，
+还能为新质生产力的地理集聚提供必要的空间载体支撑，
+最终实现区域协调发展与高质量增长的双重目标。
+
+本文仍有进一步拓展空间：
+当前模型采用2017年截面数据校准，
+未来可结合城市面板数据估计土地财政—TFP弹性的时变特征；
+异质性家庭（房主与租房者）、土地抵押融资渠道
+和城投平台资产负债表尚未纳入模型，
+这些拓展将有助于更完整地刻画房地产下行周期中的财政金融联动。
+
+%% ================================================================
+\section*{参考文献}
+\addcontentsline{toc}{section}{参考文献}
+
+\begin{thebibliography}{99}
+
+\bibitem[Ahlfeldt et al.(2015)]{ahlfeldt2015}
+Ahlfeldt, G.~M., Redding, S.~J., Sturm, D.~M., \& Wolf, N. (2015).
+The economics of density: Evidence from the Berlin wall.
+\textit{Econometrica}, 83(6), 2127--2189.
+
+\bibitem[Aschauer(1989)]{aschauer1989}
+Aschauer, D.~A. (1989).
+Is public expenditure productive?
+\textit{Journal of Monetary Economics}, 23(2), 177--200.
+
+\bibitem[白重恩等(2016)]{bai2016}
+白重恩, 李宏彬, 吴斌珍.
+城市化、土地出让与住房价格.
+\textit{经济研究}, (11), 23--36, 2016.
+
+\bibitem[Calderón \& Servén(2008)]{calderon2008}
+Calderón, C., \& Servén, L. (2008).
+Infrastructure and economic development in Sub-Saharan Africa.
+\textit{World Bank Policy Research Working Paper}, No. 4712.
+
+\bibitem[陈斌开和张川川(2016)]{chen2016b}
+陈斌开, 张川川.
+人力资本与中国居民家庭财产不平等.
+\textit{经济研究}, 51(3), 54--66, 2016.
+
+\bibitem[Chen \& Kung(2016)]{chen2016}
+Chen, T., \& Kung, J.~K. (2016).
+Do land revenue windfalls create a political resource curse?
+Evidence from China.
+\textit{Journal of Development Economics}, 123, 86--106.
+
+\bibitem[陈强远等(2020)]{chen2020}
+陈强远, 张文尝, 徐现祥.
+高铁开通与中国城市间人口流动.
+\textit{经济研究}, 55(6), 60--74, 2020.
+
+\bibitem[陈钊和陆铭(2016)]{chen2017}
+陈钊, 陆铭.
+从分割到融合：城乡经济增长与社会和谐的政治经济学.
+\textit{经济研究}, 51(1), 4--16, 2016.
+
+\bibitem[Diamond(2016)]{diamond2016}
+Diamond, R. (2016).
+The determinants and welfare implications of US workers' diverging location choices by skill: 1980--2000.
+\textit{American Economic Review}, 106(3), 479--524.
+
+\bibitem[Eaton \& Kortum(2002)]{eaton2002}
+Eaton, J., \& Kortum, S. (2002).
+Technology, geography, and trade.
+\textit{Econometrica}, 70(5), 1741--1779.
+
+\bibitem[Fajgelbaum et al.(2019)]{fajgelbaum2019}
+Fajgelbaum, P.~D., Morales, E., Su\'{a}rez Serrato, J.~C., \& Zidar, O. (2019).
+State taxes and spatial misallocation.
+\textit{Review of Economic Studies}, 86(1), 333--376.
+
+\bibitem[范子英(2019)]{fan2019}
+范子英.
+土地财政的根源：财政压力还是投资冲动.
+\textit{中国工业经济}, (6), 80--100, 2019.
+
+\bibitem[Favilukis et al.(2017)]{favilukis2017}
+Favilukis, J., Ludvigson, S.~C., \& Van Nieuwerburgh, S. (2017).
+The macroeconomic effects of housing wealth, housing finance,
+and limited risk sharing in general equilibrium.
+\textit{Journal of Political Economy}, 125(1), 140--223.
+
+\bibitem[傅勇和张晏(2007)]{fuyong2007}
+傅勇, 张晏.
+中国式分权与财政支出结构偏向：为增长而竞争的代价.
+\textit{管理世界}, (3), 4--12, 2007.
+
+\bibitem[Glaeser \& Gyourko(2005)]{glaeser2005}
+Glaeser, E., \& Gyourko, J. (2005).
+Urban decline and durable housing.
+\textit{Journal of Political Economy}, 113(2), 345--375.
+
+\bibitem[Gyourko et al.(2013)]{gyourko2013}
+Gyourko, J., Mayer, C., \& Sinai, T. (2013).
+Superstar cities.
+\textit{American Economic Journal: Economic Policy}, 5(4), 167--199.
+
+\bibitem[Henderson(1974)]{henderson1974}
+Henderson, J.~V. (1974).
+The sizes and types of cities.
+\textit{American Economic Review}, 64(4), 640--656.
+
+\bibitem[Hsieh \& Klenow(2009)]{hsiehklenow2009}
+Hsieh, C.-T., \& Klenow, P.~J. (2009).
+Misallocation and manufacturing TFP in China and India.
+\textit{Quarterly Journal of Economics}, 124(4), 1403--1448.
+
+\bibitem[Hsieh \& Moretti(2019)]{hsiehmoretti2019}
+Hsieh, C.-T., \& Moretti, E. (2019).
+Housing constraints and spatial misallocation.
+\textit{American Economic Journal: Macroeconomics}, 11(2), 1--39.
+
+\bibitem[黄赜琳等(2018)]{huang2018}
+黄赜琳, 朱保华.
+房地产库存的空间分布及去化机制研究.
+\textit{经济学动态}, (9), 45--58, 2018.
+
+\bibitem[Iacoviello(2005)]{iacoviello2005}
+Iacoviello, M. (2005).
+House prices, borrowing constraints, and monetary policy in the business cycle.
+\textit{American Economic Review}, 95(3), 739--764.
+
+\bibitem[Kiyotaki \& Moore(1997)]{kiyotakimoore1997}
+Kiyotaki, N., \& Moore, J. (1997).
+Credit cycles.
+\textit{Journal of Political Economy}, 105(2), 211--248.
+
+\bibitem[Kline \& Moretti(2014)]{kline2014}
+Kline, P., \& Moretti, E. (2014).
+Local economic development, agglomeration economies, and the big push.
+\textit{Quarterly Journal of Economics}, 129(1), 275--331.
+
+\bibitem[Liu et al.(2013)]{liuetal2013}
+Liu, Z., Wang, P., \& Zha, T. (2013).
+Land-price dynamics and macroeconomic fluctuations.
+\textit{Econometrica}, 81(3), 1147--1184.
+
+\bibitem[刘守英(2018)]{liu2018}
+刘守英.
+土地制度与中国发展模式.
+\textit{中国人民大学学报}, (1), 20--31, 2018.
+
+\bibitem[Liu et al.(2021)]{liu2021}
+Liu, Y., Xu, J., \& Wang, S. (2021).
+Land finance and urban growth in China.
+\textit{Journal of Urban Economics}, 124, 103381.
+
+\bibitem[陆铭等(2019)]{lu2019}
+陆铭, 张航, 梁文泉.
+偏向中西部的政策影响了中国制造业的地区分布吗.
+\textit{中国社会科学}, (4), 64--83, 2019.
+
+\bibitem[陆铭等(2020)]{lu2020}
+陆铭, 欧海军.
+高增长与低就业：政府干预与就业增长的经济学分析.
+\textit{经济研究}, 55(6), 21--37, 2020.
+
+\bibitem[罗知等(2022)]{luo2022}
+罗知, 赵奇锋, 汪海鹏.
+地方政府债务、企业融资与资源配置效率.
+\textit{经济研究}, 57(2), 71--87, 2022.
+
+\bibitem[Musgrave(1959)]{musgrave1959}
+Musgrave, R.~A. (1959).
+\textit{The Theory of Public Finance}.
+McGraw-Hill: New York.
+
+\bibitem[Oates(1972)]{oates1972}
+Oates, W.~E. (1972).
+\textit{Fiscal Federalism}.
+Harcourt Brace Jovanovich: New York.
+
+\bibitem[钱颖一和Weingast(1997)]{qiantingyi1994}
+钱颖一, Weingast, B.~R.
+联邦主义作为承诺维护市场的机制.
+\textit{经济社会体制比较}, (1), 1--20, 1997.
+
+\bibitem[Roback(1982)]{roback1982}
+Roback, J. (1982).
+Wages, rents, and the quality of life.
+\textit{Journal of Political Economy}, 90(6), 1257--1278.
+
+\bibitem[Redding \& Rossi-Hansberg(2017)]{redding2017}
+Redding, S.~J., \& Rossi-Hansberg, E. (2017).
+Quantitative spatial economics.
+\textit{Annual Review of Economics}, 9, 21--58.
+
+\bibitem[Rosen(1979)]{rosen1979}
+Rosen, S. (1979).
+Wage-based indexes of urban quality of life.
+In P. Mieszkowski \& M. Straszheim (Eds.),
+\textit{Current Issues in Urban Economics}.
+Johns Hopkins University Press.
+
+\bibitem[Tiebout(1956)]{tiebout1956}
+Tiebout, C.~M. (1956).
+A pure theory of local expenditures.
+\textit{Journal of Political Economy}, 64(5), 416--424.
+
+\bibitem[王鹏等(2020)]{wang2020}
+王鹏, 陈斌开.
+中国城市土地价格扭曲：来自地价指数的证据.
+\textit{世界经济}, (3), 122--148, 2020.
+
+\bibitem[严鹏飞等(2021)]{yan2021}
+严鹏飞, 马玉超, 毛其淋.
+建设用地指标跨区域流转与地区经济发展.
+\textit{经济研究}, 56(5), 120--135, 2021.
+
+\bibitem[赵文哲和杨继东(2015)]{zhao2015}
+赵文哲, 杨继东.
+地方政府财政缺口与土地出让行为.
+\textit{世界经济}, (9), 122--145, 2015.
+
+\end{thebibliography}
+
+%% ================================================================
+%% 附录
+%% ================================================================
+\appendix
+\section{模型推导补充}
+
+\subsection{命题1的证明}
+
+\begin{proof}
+从方程（\ref{eq:tfp_q_elas}）出发，
+对房价冲击$\varepsilon^q$全微分：
+$d\ln A_i = \rho\cdot s^G_{Rh,i}\cdot d\varepsilon^q$。
+记$\chi_i$为TFP变化通过工资、迁移、土地需求和债务约束反馈到土地财政收入的综合弹性。
+一次反馈使下一轮TFP变化为$\Phi_i=\rho s^G_{Rh,i}\chi_i$倍的上一轮冲击。
+因此，总效应可写成几何级数：
+$\rho s^G_{Rh,i}d\varepsilon^q + \rho s^G_{Rh,i}\Phi_i d\varepsilon^q + \cdots$
+当$\Phi_i\in(0,1)$时，几何级数收敛，得到方程（\ref{eq:spiral}）。
+\end{proof}
+
+\subsection{均衡求解算法}
+
+模型均衡求解采用嵌套不动点迭代：
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{外层循环}：给定土地分配$(\Ry,\Rh)$和政府转移$F$，
+  调用Python的\texttt{scipy.optimize.fsolve}求解方程组（\ref{eq:equilibrium}），
+  得到$(d\bm{w},d\bm{L},d\bm{L}^h)$。
+\item \textbf{内层更新}：计算新均衡的$G_{\rm new}$、$A_{\rm new}$、$q_{\rm new}$，
+  验证市场出清条件（\ref{eq:land_clearing}）。
+\item \textbf{收敛准则}：$\|d\bm{w}^{(k+1)}-d\bm{w}^{(k)}\|_\infty < 10^{-8}$。
+\end{enumerate}
+
+\subsection{帕累托最优算法}
+
+方程（\ref{eq:pareto}）的数值求解采用网格搜索法：
+对$\lambda\in\{0.0,0.05,0.10,\ldots,1.0\}$逐一求解最优指标分配，
+记录对应的$(\Delta\text{GDP},\Delta\text{Theil})$，
+绘制效率—公平权衡前沿。
+最优解定义为前沿上最大化$\lambda^*\cdot\Delta\text{GDP}-(1-\lambda^*)\cdot\Delta\text{Theil}$，
+其中$\lambda^*$由社会规划者偏好决定。
+本文以$\lambda^*=0.6$（GDP增长权重略高于公平权重）
+作为基准最优解报告。
+
+\subsection{稳健性检验完整参数范围}
+
+对以下参数进行稳健性检验：
+$\alpha\in\{0.55,0.67,0.80\}$，
+$\eta\in\{0.10,0.13,0.16\}$，
+$\kappa\in\{2,3,4\}$，
+$\sigma\in\{0.55,0.65,0.75\}$，
+$\rho\in\{0.05,0.103,0.20,0.30\}$。
+$\rho$的极值以Aschauer（1989）的0.30和本文保守估计0.05为上下界，
+在所有参数扰动下方向性结论保持稳健。
+
+\end{document}
